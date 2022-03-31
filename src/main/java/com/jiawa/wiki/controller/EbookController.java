@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-03-31 16:20:00
+ * @LastEditTime : 2022-03-31 17:32:02
  * 
  * @Description : 请填写简介
  */
@@ -15,8 +15,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.jiawa.wiki.domain.Ebook;
+import com.jiawa.wiki.req.EbookReq;
 import com.jiawa.wiki.resp.CommonResp;
+import com.jiawa.wiki.resp.EbookResp;
 import com.jiawa.wiki.service.EbookService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,9 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public CommonResp ebook() {
-        CommonResp<List<Ebook>> resp = new CommonResp<>();
-        List<Ebook> list = ebookService.list();
+    public CommonResp ebook(EbookReq req) {
+        CommonResp<List<EbookResp>> resp = new CommonResp<>();
+        List<EbookResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
