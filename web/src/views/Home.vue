@@ -48,10 +48,49 @@
         minHeight: '280px',
       }"
     >
-      <pre>
-        {{ ebooks }}
-        {{ books }}
-      </pre>
+      <a-list
+        v-show="!isShowWelcome"
+        item-layout="vertical"
+        size="large"
+        :grid="{ gutter: 20, column: 3 }"
+        :data-source="ebooks"
+      >
+        <template #renderItem="{ item }">
+          <a-list-item key="item.name">
+            <template #actions>
+              <span>
+                <component
+                  v-bind:is="'FileOutlined'"
+                  style="margin-right: 8px"
+                />
+                {{ item.docCount }}
+              </span>
+              <span>
+                <component
+                  v-bind:is="'UserOutlined'"
+                  style="margin-right: 8px"
+                />
+                {{ item.viewCount }}
+              </span>
+              <span>
+                <component
+                  v-bind:is="'LikeOutlined'"
+                  style="margin-right: 8px"
+                />
+                {{ item.voteCount }}
+              </span>
+            </template>
+            <a-list-item-meta :description="item.description">
+              <template #title>
+                <router-link :to="'/doc?ebookId=' + item.id">
+                  {{ item.name }}
+                </router-link>
+              </template>
+              <template #avatar><a-avatar :src="item.cover" /></template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
     </a-layout-content>
   </a-layout>
 </template>
@@ -59,6 +98,20 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, reactive, toRef } from "vue";
 import axios from "axios";
+
+const listData: any = [];
+for (let i = 0; i < 23; i++) {
+  listData.push({
+    href: "https://www.antdv.com/",
+    title: `ant design vue part ${i}`,
+    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+    description:
+      "Ant Design, a design language for background applications, is refined by Ant UED Team.",
+    content:
+      "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
+  });
+}
+
 export default defineComponent({
   name: "Home",
   setup() {
@@ -67,19 +120,39 @@ export default defineComponent({
     const ebooks1 = reactive({ books: [] });
     onMounted(() => {
       console.log("onMounted");
-      axios
-        .get("http://localhost:8880/ebook/list?name=Spring")
-        .then((response) => {
-          const data = response.data;
-          ebooks.value = data.content;
-          ebooks1.books = data.content;
-          console.log(response);
-        });
+      axios.get("/ebook/list").then((response) => {
+        const data = response.data;
+        ebooks.value = data.content;
+        ebooks1.books = data.content;
+        console.log(response);
+      });
     });
     return {
       ebooks,
       books: toRef(ebooks1, "books"),
+      listData,
+      pagination: {
+        onChange: (page: any) => {
+          console.log(page);
+        },
+        pageSize: 3,
+      },
+      actions: [
+        { type: "StarOutlined", text: "156" },
+        { type: "LikeOutlined", text: "156" },
+        { type: "MessageOutlined", text: "2" },
+      ],
     };
   },
 });
 </script>
+
+<style scoped>
+.ant-avatar {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 8%;
+  margin: 5px 0;
+}
+</style>

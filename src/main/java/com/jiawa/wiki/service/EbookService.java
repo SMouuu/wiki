@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-03-31 17:43:01
+ * @LastEditTime : 2022-04-01 19:24:04
  * 
  * @Description : 请填写简介
  */
@@ -21,6 +21,8 @@ import com.jiawa.wiki.util.CopyUtil;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -36,7 +38,9 @@ public class EbookService {
     public List<EbookResp> list(EbookReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
-        criteria.andNameLike("%" + req.getName() + "%");
+        if (!ObjectUtils.isEmpty(req.getName())) {
+            criteria.andNameLike("%" + req.getName() + "%");
+        }
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
         // List<EbookResp> respList = new ArrayList<>();
         // for (Ebook ebook : ebookList) {
