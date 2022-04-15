@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:59:25
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 22:22:47
+ * @LastEditTime : 2022-04-15 22:37:56
  * @Description  : 请填写简介
  */
 
@@ -11,12 +11,12 @@ package com.jiawa.wiki.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import com.jiawa.wiki.req.User1QueryReq;
-import com.jiawa.wiki.req.User1SaveReq;
+import com.jiawa.wiki.req.UserQueryReq;
+import com.jiawa.wiki.req.UserSaveReq;
 import com.jiawa.wiki.resp.CommonResp;
 import com.jiawa.wiki.resp.PageResp;
-import com.jiawa.wiki.resp.User1QueryResp;
-import com.jiawa.wiki.service.User1Service;
+import com.jiawa.wiki.resp.UserQueryResp;
+import com.jiawa.wiki.service.UserService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,22 +28,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
-public class User1Controller {
+public class UserController {
 
     @Resource
-    private User1Service userService;
+    private UserService userService;
 
     @GetMapping("/list")
     // @Valid 校验开启
-    public CommonResp list(@Valid User1QueryReq req) {
-        CommonResp<PageResp<User1QueryResp>> resp = new CommonResp<>();
-        PageResp<User1QueryResp> list = userService.list(req);
+    public CommonResp list(@Valid UserQueryReq req) {
+        CommonResp<PageResp<UserQueryResp>> resp = new CommonResp<>();
+        PageResp<UserQueryResp> list = userService.list(req);
         resp.setContent(list);
         return resp;
     }
 
     @PostMapping("/save")
-    public CommonResp save(@Valid @RequestBody User1SaveReq req) {
+    public CommonResp save(@Valid @RequestBody UserSaveReq req) {
         CommonResp resp = new CommonResp<>();
         userService.save(req);
         return resp;

@@ -1,6 +1,13 @@
-package com.jiawa.wiki.domain;
+/*
+ * @Author       : SMou
+ * @Date         : 2022-04-15 22:16:47
+ * @LastEditors  : SMou
+ * @LastEditTime : 2022-04-15 22:38:20
+ * @Description  : 请填写简介
+ */
+package com.jiawa.wiki.resp;
 
-public class User1 {
+public class UserQueryResp {
     private Long id;
 
     private String loginName;
