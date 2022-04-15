@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-04-15 17:08:47
+ * @LastEditTime : 2022-04-15 17:14:06
  * 
  * @Description : 请填写简介
  */
@@ -87,5 +87,10 @@ public class EbookService {
             ebookMapper.updateByPrimaryKey(ebook);
         }
 
+    }
+
+    // 删除
+    public void delete(Long id) {
+        ebookMapper.deleteByPrimaryKey(id);
     }
 }
