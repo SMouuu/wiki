@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-04-15 17:22:11
+ * @LastEditTime : 2022-04-15 17:33:24
  * 
  * @Description : 请填写简介
  */
@@ -47,7 +47,7 @@ public class EbookController {
     }
 
     @PostMapping("/save")
-    public CommonResp save(@RequestBody EbookSaveReq req) {
+    public CommonResp save(@Valid @RequestBody EbookSaveReq req) {
         CommonResp resp = new CommonResp<>();
         ebookService.save(req);
         return resp;

@@ -2,14 +2,17 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 16:36:50
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 16:37:07
+ * @LastEditTime : 2022-04-15 17:32:34
  * @Description  : 请填写简介
  */
 package com.jiawa.wiki.req;
 
+import javax.validation.constraints.NotNull;
+
 public class EbookSaveReq {
     private Long id;
 
+    @NotNull(message = "【名称】不能为空")
     private String name;
 
     private Long category1Id;
