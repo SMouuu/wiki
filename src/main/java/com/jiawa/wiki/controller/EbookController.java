@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-04-15 17:33:24
+ * @LastEditTime : 2022-04-15 20:07:25
  * 
  * @Description : 请填写简介
  */
@@ -39,6 +39,7 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
+    // @Valid 校验开启
     public CommonResp ebook(@Valid EbookQueryReq req) {
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(req);
