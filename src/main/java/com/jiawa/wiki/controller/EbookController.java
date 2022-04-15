@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-04-15 16:17:33
+ * @LastEditTime : 2022-04-15 16:37:34
  * 
  * @Description : 请填写简介
  */
@@ -15,13 +15,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.jiawa.wiki.req.EbookReq;
+import com.jiawa.wiki.req.EbookQueryReq;
+import com.jiawa.wiki.req.EbookSaveReq;
 import com.jiawa.wiki.resp.CommonResp;
-import com.jiawa.wiki.resp.EbookResp;
+import com.jiawa.wiki.resp.EbookQueryResp;
 import com.jiawa.wiki.resp.PageResp;
 import com.jiawa.wiki.service.EbookService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,10 +35,18 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public CommonResp ebook(EbookReq req) {
-        CommonResp<PageResp<EbookResp>> resp = new CommonResp<>();
-        PageResp<EbookResp> list = ebookService.list(req);
+    public CommonResp ebook(EbookQueryReq req) {
+        CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
+        PageResp<EbookQueryResp> list = ebookService.list(req);
         resp.setContent(list);
         return resp;
     }
+
+    @PostMapping("/save")
+    public CommonResp save(EbookSaveReq req) {
+        CommonResp resp = new CommonResp<>();
+        ebookService.save(req);
+        return resp;
+    }
+
 }
