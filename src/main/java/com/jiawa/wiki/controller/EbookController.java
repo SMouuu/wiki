@@ -5,7 +5,7 @@
  * 
  * @LastEditors  : SMou
  * 
- * @LastEditTime : 2022-04-15 17:14:40
+ * @LastEditTime : 2022-04-15 17:22:11
  * 
  * @Description : 请填写简介
  */
@@ -14,6 +14,7 @@ package com.jiawa.wiki.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import com.jiawa.wiki.req.EbookQueryReq;
 import com.jiawa.wiki.req.EbookSaveReq;
@@ -38,7 +39,7 @@ public class EbookController {
     private EbookService ebookService;
 
     @GetMapping("/list")
-    public CommonResp ebook(EbookQueryReq req) {
+    public CommonResp ebook(@Valid EbookQueryReq req) {
         CommonResp<PageResp<EbookQueryResp>> resp = new CommonResp<>();
         PageResp<EbookQueryResp> list = ebookService.list(req);
         resp.setContent(list);
