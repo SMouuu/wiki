@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 20:16:43
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 20:18:34
+ * @LastEditTime : 2022-04-15 20:34:46
  * @Description  : 请填写简介
  */
 /*
@@ -44,6 +44,15 @@ public class CategoryController {
 
     @Resource
     private CategoryService categoryService;
+
+    @GetMapping("/all")
+    // @Valid 校验开启
+    public CommonResp all(@Valid CategoryQueryReq req) {
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
+        List<CategoryQueryResp> list = categoryService.all(req);
+        resp.setContent(list);
+        return resp;
+    }
 
     @GetMapping("/list")
     // @Valid 校验开启

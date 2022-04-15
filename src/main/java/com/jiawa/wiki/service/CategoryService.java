@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 20:19:30
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 20:19:47
+ * @LastEditTime : 2022-04-15 20:33:55
  * @Description  : 请填写简介
  */
 /*
@@ -33,14 +33,11 @@ import com.jiawa.wiki.util.SnowFlake;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,9 +50,20 @@ public class CategoryService {
     @Resource
     private SnowFlake snowFlake;
 
+    public List<CategoryQueryResp> all(CategoryQueryReq req) {
+
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
+        // 列表复制
+        List<CategoryQueryResp> list = CopyUtil.copyList(categoryList, CategoryQueryResp.class);
+        return list;
+    }
+
     public PageResp<CategoryQueryResp> list(CategoryQueryReq req) {
 
         CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
         CategoryExample.Criteria criteria = categoryExample.createCriteria();
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Category> categoryList = categoryMapper.selectByExample(categoryExample);
