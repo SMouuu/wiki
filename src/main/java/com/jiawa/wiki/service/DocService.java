@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:38:39
+ * @LastEditTime : 2022-04-15 21:45:59
  * @Description  : 请填写简介
  */
 
@@ -112,5 +112,10 @@ public class DocService {
         DocExample.Criteria criteria = docExample.createCriteria();
         criteria.andIdIn(ids);
         docMapper.deleteByExample(docExample);
+    }
+
+    public String findContent(Long id) {
+        Content content = contentMapper.selectByPrimaryKey(id);
+        return content.getContent();
     }
 }

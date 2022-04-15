@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:02:06
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:14:49
+ * @LastEditTime : 2022-04-15 21:46:55
  * @Description  : 请填写简介
  */
 
@@ -47,7 +47,7 @@ public class DocController {
 
     @GetMapping("/list")
     // @Valid 校验开启
-    public CommonResp doc(@Valid DocQueryReq req) {
+    public CommonResp list(@Valid DocQueryReq req) {
         CommonResp<PageResp<DocQueryResp>> resp = new CommonResp<>();
         PageResp<DocQueryResp> list = docService.list(req);
         resp.setContent(list);
@@ -69,4 +69,12 @@ public class DocController {
         return resp;
     }
 
+    @GetMapping("/find-content/{id}")
+    // @Valid 校验开启
+    public CommonResp findContent(@PathVariable Long id) {
+        CommonResp<String> resp = new CommonResp<>();
+        String content = docService.findContent(id);
+        resp.setContent(content);
+        return resp;
+    }
 }
