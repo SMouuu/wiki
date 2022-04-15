@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:02:06
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:46:55
+ * @LastEditTime : 2022-04-15 21:51:09
  * @Description  : 请填写简介
  */
 
@@ -36,11 +36,11 @@ public class DocController {
     @Resource
     private DocService docService;
 
-    @GetMapping("/all")
+    @GetMapping("/all/{ebookId}")
     // @Valid 校验开启
-    public CommonResp all(@Valid DocQueryReq req) {
+    public CommonResp all(@PathVariable Long ebookId) {
         CommonResp<List<DocQueryResp>> resp = new CommonResp<>();
-        List<DocQueryResp> list = docService.all(req);
+        List<DocQueryResp> list = docService.all(ebookId);
         resp.setContent(list);
         return resp;
     }

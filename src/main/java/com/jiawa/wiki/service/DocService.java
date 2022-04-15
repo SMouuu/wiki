@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:45:59
+ * @LastEditTime : 2022-04-15 21:54:09
  * @Description  : 请填写简介
  */
 
@@ -44,9 +44,10 @@ public class DocService {
     @Resource
     private SnowFlake snowFlake;
 
-    public List<DocQueryResp> all(DocQueryReq req) {
+    public List<DocQueryResp> all(Long EbookId) {
 
         DocExample docExample = new DocExample();
+        docExample.createCriteria().andEbookIdEqualTo(EbookId);
         docExample.setOrderByClause("sort asc");
         List<Doc> docList = docMapper.selectByExample(docExample);
         // 列表复制
@@ -116,6 +117,10 @@ public class DocService {
 
     public String findContent(Long id) {
         Content content = contentMapper.selectByPrimaryKey(id);
-        return content.getContent();
+        if (ObjectUtils.isEmpty(content)) {
+            return "";
+        } else {
+            return content.getContent();
+        }
     }
 }
