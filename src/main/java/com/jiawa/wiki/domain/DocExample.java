@@ -144,8 +144,8 @@ public class DocExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
-            addCriterion("id in", values, "id");
+        public Criteria andIdIn(List<String> ids) {
+            addCriterion("id in", ids, "id");
             return (Criteria) this;
         }
 

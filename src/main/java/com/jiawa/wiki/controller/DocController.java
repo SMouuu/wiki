@@ -2,12 +2,13 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:02:06
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:02:25
+ * @LastEditTime : 2022-04-15 21:14:49
  * @Description  : 请填写简介
  */
 
 package com.jiawa.wiki.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -60,10 +61,11 @@ public class DocController {
         return resp;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public CommonResp delete(@PathVariable Long id) {
+    @DeleteMapping("/delete/{idsStr}")
+    public CommonResp delete(@PathVariable String idsStr) {
         CommonResp resp = new CommonResp<>();
-        docService.delete(id);
+        List<String> list = Arrays.asList(idsStr.split(","));
+        docService.delete(list);
         return resp;
     }
 
