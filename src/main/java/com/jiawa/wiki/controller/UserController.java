@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:59:25
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 22:37:56
+ * @LastEditTime : 2022-04-16 16:20:33
  * @Description  : 请填写简介
  */
 
@@ -18,6 +18,7 @@ import com.jiawa.wiki.resp.PageResp;
 import com.jiawa.wiki.resp.UserQueryResp;
 import com.jiawa.wiki.service.UserService;
 
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,8 @@ public class UserController {
 
     @PostMapping("/save")
     public CommonResp save(@Valid @RequestBody UserSaveReq req) {
+        // 密码md5加密32位
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
         CommonResp resp = new CommonResp<>();
         userService.save(req);
         return resp;
