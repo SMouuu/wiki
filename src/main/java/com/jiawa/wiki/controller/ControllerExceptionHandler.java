@@ -2,12 +2,12 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 17:25:58
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 17:27:20
+ * @LastEditTime : 2022-04-16 16:12:01
  * @Description  : 请填写简介
  */
 package com.jiawa.wiki.controller;
 
-// import com.jiawa.wiki.exception.BusinessException;
+import com.jiawa.wiki.exception.BusinessException;
 import com.jiawa.wiki.resp.CommonResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,15 +46,15 @@ public class ControllerExceptionHandler {
      * @param e
      * @return
      */
-    // @ExceptionHandler(value = BusinessException.class)
-    // @ResponseBody
-    // public CommonResp validExceptionHandler(BusinessException e) {
-    // CommonResp commonResp = new CommonResp();
-    // LOG.warn("业务异常：{}", e.getCode().getDesc());
-    // commonResp.setSuccess(false);
-    // commonResp.setMessage(e.getCode().getDesc());
-    // return commonResp;
-    // }
+    @ExceptionHandler(value = BusinessException.class)
+    @ResponseBody
+    public CommonResp validExceptionHandler(BusinessException e) {
+        CommonResp commonResp = new CommonResp();
+        LOG.warn("业务异常：{}", e.getCode().getDesc());
+        commonResp.setSuccess(false);
+        commonResp.setMessage(e.getCode().getDesc());
+        return commonResp;
+    }
 
     /**
      * 校验异常统一处理

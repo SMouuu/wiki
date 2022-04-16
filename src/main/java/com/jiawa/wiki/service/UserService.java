@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 22:00:22
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 22:40:05
+ * @LastEditTime : 2022-04-16 16:16:31
  * @Description  : 请填写简介
  */
 
@@ -11,16 +11,12 @@ package com.jiawa.wiki.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiawa.wiki.domain.User;
-import com.jiawa.wiki.domain.User;
-import com.jiawa.wiki.domain.UserExample;
 import com.jiawa.wiki.domain.UserExample;
 import com.jiawa.wiki.exception.BusinessException;
 import com.jiawa.wiki.exception.BusinessExceptionCode;
 import com.jiawa.wiki.mapper.UserMapper;
-import com.jiawa.wiki.mapper.UserMapper;
 import com.jiawa.wiki.req.UserQueryReq;
 import com.jiawa.wiki.req.UserSaveReq;
-import com.jiawa.wiki.req.UserQueryReq;
 import com.jiawa.wiki.resp.UserQueryResp;
 import com.jiawa.wiki.resp.PageResp;
 import com.jiawa.wiki.util.CopyUtil;
@@ -87,10 +83,10 @@ public class UserService {
                 // 用户名已存在
                 throw new BusinessException(BusinessExceptionCode.USER_LOGIN_NAME_EXIST);
             }
-
         } else {
             // 更新
-            userMapper.updateByPrimaryKey(user);
+            user.setLoginName(null);
+            userMapper.updateByPrimaryKeySelective(user);
         }
 
     }
@@ -111,4 +107,5 @@ public class UserService {
             return userList.get(0);
         }
     }
+
 }
