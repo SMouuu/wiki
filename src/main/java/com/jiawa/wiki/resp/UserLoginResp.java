@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-16 17:16:46
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 17:17:00
+ * @LastEditTime : 2022-04-16 18:09:32
  * @Description  : 请填写简介
  */
 /*
@@ -14,15 +14,22 @@
  */
 package com.jiawa.wiki.resp;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 public class UserLoginResp {
     private Long id;
 
     private String loginName;
 
     private String name;
+
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Long getId() {
         return id;
@@ -50,14 +57,7 @@ public class UserLoginResp {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", loginName=").append(loginName);
-        sb.append(", name=").append(name);
-        sb.append("]");
-        return sb.toString();
+        return "UserLoginResp [id=" + id + ", loginName=" + loginName + ", name=" + name + ", token=" + token + "]";
     }
+
 }
