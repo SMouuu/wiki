@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 22:00:22
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 16:16:31
+ * @LastEditTime : 2022-04-16 16:58:50
  * @Description  : 请填写简介
  */
 
@@ -16,6 +16,7 @@ import com.jiawa.wiki.exception.BusinessException;
 import com.jiawa.wiki.exception.BusinessExceptionCode;
 import com.jiawa.wiki.mapper.UserMapper;
 import com.jiawa.wiki.req.UserQueryReq;
+import com.jiawa.wiki.req.UserResetPasswordReq;
 import com.jiawa.wiki.req.UserSaveReq;
 import com.jiawa.wiki.resp.UserQueryResp;
 import com.jiawa.wiki.resp.PageResp;
@@ -86,6 +87,7 @@ public class UserService {
         } else {
             // 更新
             user.setLoginName(null);
+            user.setPassword(null);
             userMapper.updateByPrimaryKeySelective(user);
         }
 
@@ -106,6 +108,13 @@ public class UserService {
         } else {
             return userList.get(0);
         }
+    }
+
+    // 修改密码
+    public void resetPassword(UserResetPasswordReq req) {
+        User user = CopyUtil.copy(req, User.class);
+        userMapper.updateByPrimaryKeySelective(user);
+
     }
 
 }
