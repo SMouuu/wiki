@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:59:25
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 18:18:12
+ * @LastEditTime : 2022-04-16 18:39:30
  * @Description  : 请填写简介
  */
 
@@ -99,6 +99,15 @@ public class UserController {
         redisTemplate.opsForValue().set(token, JSONObject.toJSONString(userLoginResp), 3600 * 24, TimeUnit.SECONDS);
 
         resp.setContent(userLoginResp);
+        return resp;
+    }
+
+    // 退出登录
+    @GetMapping("/logout/{token}")
+    public CommonResp logout(@PathVariable String token) {
+        CommonResp resp = new CommonResp<>();
+        redisTemplate.delete(token);
+        LOG.info("从redis中删除token:{}", token);
         return resp;
     }
 
