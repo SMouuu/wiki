@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:59:25
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 16:59:18
+ * @LastEditTime : 2022-04-16 17:19:06
  * @Description  : 请填写简介
  */
 
@@ -11,11 +11,13 @@ package com.jiawa.wiki.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import com.jiawa.wiki.req.UserLoginReq;
 import com.jiawa.wiki.req.UserQueryReq;
 import com.jiawa.wiki.req.UserResetPasswordReq;
 import com.jiawa.wiki.req.UserSaveReq;
 import com.jiawa.wiki.resp.CommonResp;
 import com.jiawa.wiki.resp.PageResp;
+import com.jiawa.wiki.resp.UserLoginResp;
 import com.jiawa.wiki.resp.UserQueryResp;
 import com.jiawa.wiki.service.UserService;
 
@@ -66,6 +68,16 @@ public class UserController {
     public CommonResp delete(@PathVariable Long id) {
         CommonResp resp = new CommonResp<>();
         userService.delete(id);
+        return resp;
+    }
+
+    @PostMapping("/login")
+    public CommonResp login(@Valid @RequestBody UserLoginReq req) {
+        // 密码md5加密32位
+        req.setPassword(DigestUtils.md5DigestAsHex(req.getPassword().getBytes()));
+        CommonResp<UserLoginResp> resp = new CommonResp<>();
+        UserLoginResp userLoginResp = userService.login(req);
+        resp.setContent(userLoginResp);
         return resp;
     }
 

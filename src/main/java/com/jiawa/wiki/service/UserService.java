@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 22:00:22
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 16:58:50
+ * @LastEditTime : 2022-04-16 17:27:42
  * @Description  : 请填写简介
  */
 
@@ -15,11 +15,13 @@ import com.jiawa.wiki.domain.UserExample;
 import com.jiawa.wiki.exception.BusinessException;
 import com.jiawa.wiki.exception.BusinessExceptionCode;
 import com.jiawa.wiki.mapper.UserMapper;
+import com.jiawa.wiki.req.UserLoginReq;
 import com.jiawa.wiki.req.UserQueryReq;
 import com.jiawa.wiki.req.UserResetPasswordReq;
 import com.jiawa.wiki.req.UserSaveReq;
 import com.jiawa.wiki.resp.UserQueryResp;
 import com.jiawa.wiki.resp.PageResp;
+import com.jiawa.wiki.resp.UserLoginResp;
 import com.jiawa.wiki.util.CopyUtil;
 import com.jiawa.wiki.util.SnowFlake;
 
@@ -115,6 +117,24 @@ public class UserService {
         User user = CopyUtil.copy(req, User.class);
         userMapper.updateByPrimaryKeySelective(user);
 
+    }
+
+    // 登录
+    public UserLoginResp login(UserLoginReq req) {
+        User userDb = selectByLoginName(req.getLoginName());
+        if (ObjectUtils.isEmpty(userDb)) {
+            // 用户名不存在
+            LOG.info("用户名不存在,{}", req.getLoginName());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+        } else {
+            if (!userDb.getPassword().equals(req.getPassword())) {
+                LOG.info("密码错误,输入密码{}，数据库密码{}", req.getPassword(), userDb.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
+            } else {
+                UserLoginResp userLoginResp = CopyUtil.copy(userDb, UserLoginResp.class);
+                return userLoginResp;
+            }
+        }
     }
 
 }
