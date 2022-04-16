@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:59:25
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-16 18:39:30
+ * @LastEditTime : 2022-04-16 18:56:56
  * @Description  : 请填写简介
  */
 
@@ -96,7 +96,8 @@ public class UserController {
         Long token = snowFlake.nextId();
         LOG.info("生成单点登录token:{},并放入redis中", token);
         userLoginResp.setToken(token.toString());
-        redisTemplate.opsForValue().set(token, JSONObject.toJSONString(userLoginResp), 3600 * 24, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(token.toString(), JSONObject.toJSONString(userLoginResp), 3600 * 24,
+                TimeUnit.SECONDS);
 
         resp.setContent(userLoginResp);
         return resp;
