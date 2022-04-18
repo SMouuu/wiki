@@ -2,13 +2,15 @@
  * @Author       : SMou
  * @Date         : 2022-04-07 00:55:23
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-07 01:04:35
+ * @LastEditTime : 2022-04-18 16:08:53
  * @Description  : 请填写简介
  */
 package com.jiawa.wiki.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import com.jiawa.wiki.util.RequestContext;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -61,7 +63,7 @@ public class LogAspect {
         LOG.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
         LOG.info("远程地址: {}", request.getRemoteAddr());
 
-        // RequestContext.setRemoteAddr(getRemoteIp(request));
+        RequestContext.setRemoteAddr(getRemoteIp(request));
 
         // 打印请求参数
         Object[] args = joinPoint.getArgs();
