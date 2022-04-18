@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-07 00:55:23
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 16:08:53
+ * @LastEditTime : 2022-04-18 16:57:57
  * @Description  : 请填写简介
  */
 package com.jiawa.wiki.aspect;
@@ -10,6 +10,7 @@ package com.jiawa.wiki.aspect;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import com.jiawa.wiki.util.RequestContext;
+import com.jiawa.wiki.util.SnowFlake;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -42,14 +43,14 @@ public class LogAspect {
     public void controllerPointcut() {
     }
 
-    // @Resource
-    // private SnowFlake snowFlake;
+    @Resource
+    private SnowFlake snowFlake;
 
     @Before("controllerPointcut()") // 前置通知
     public void doBefore(JoinPoint joinPoint) throws Throwable {
 
         // 增加日志流水号
-        // MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
 
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

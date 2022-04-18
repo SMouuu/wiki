@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-18 16:40:12
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 16:49:45
+ * @LastEditTime : 2022-04-18 17:00:02
  * @Description  : 请填写简介
  */
 
@@ -10,6 +10,7 @@ package com.jiawa.wiki.job;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import com.jiawa.wiki.service.DocService;
+import com.jiawa.wiki.util.SnowFlake;
 
 @Component
 public class DocJob {
@@ -28,11 +30,16 @@ public class DocJob {
     @Resource
     private DocService docService;
 
+    @Resource
+    private SnowFlake snowFlake;
+
     /**
      * 每30秒更新电子书信息
      */
     @Scheduled(cron = "1/5 * * * * ?")
     public void cron() {
+        // 增加日志流水号
+        MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
         LOG.info("每隔30秒更新电子书信息");
         long start = System.currentTimeMillis();
         docService.updateEbookInfo();
