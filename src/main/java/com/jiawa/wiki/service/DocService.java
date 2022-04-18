@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 17:55:03
+ * @LastEditTime : 2022-04-18 18:10:21
  * @Description  : 请填写简介
  */
 
@@ -27,6 +27,7 @@ import com.jiawa.wiki.util.RedisUtil;
 import com.jiawa.wiki.util.RequestContext;
 import com.jiawa.wiki.util.SnowFlake;
 
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -59,6 +60,9 @@ public class DocService {
 
     @Resource
     private WsService wsService;
+
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
 
     public List<DocQueryResp> all(Long EbookId) {
 
@@ -159,7 +163,10 @@ public class DocService {
         // websocket推送消息
         Doc docDB = docMapper.selectByPrimaryKey(id);
         String logId = MDC.get("LOG_ID");
-        wsService.sendInfo("【" + docDB.getName() + "】被点赞!", logId);
+        // 异步通知
+        // wsService.sendInfo("【" + docDB.getName() + "】被点赞!", logId);
+        // MQ通知
+        rocketMQTemplate.convertAndSend("VOTE_TOPIC", "【" + docDB.getName() + "】被点赞!");
 
     }
 
