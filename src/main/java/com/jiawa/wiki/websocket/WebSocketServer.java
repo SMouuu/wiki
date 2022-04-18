@@ -2,13 +2,14 @@
  * @Author       : SMou
  * @Date         : 2022-04-18 17:05:04
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 17:05:04
+ * @LastEditTime : 2022-04-18 17:31:59
  * @Description  : 请填写简介
  */
 package com.jiawa.wiki.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;

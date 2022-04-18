@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 17:25:38
+ * @LastEditTime : 2022-04-18 17:49:36
  * @Description  : 请填写简介
  */
 
@@ -30,6 +30,8 @@ import com.jiawa.wiki.websocket.WebSocketServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -57,7 +59,7 @@ public class DocService {
     private RedisUtil redisUtil;
 
     @Resource
-    private WebSocketServer webSocketServer;
+    private WsService wsService;
 
     public List<DocQueryResp> all(Long EbookId) {
 
@@ -155,7 +157,8 @@ public class DocService {
         }
         // websocket推送消息
         Doc docDB = docMapper.selectByPrimaryKey(id);
-        webSocketServer.sendInfo("【" + docDB.getName() + "】被点赞!");
+        String logId = MDC.get("LOG_ID");
+        wsService.sendInfo("【" + docDB.getName() + "】被点赞!", logId);
 
     }
 
