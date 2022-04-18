@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 15:54:44
+ * @LastEditTime : 2022-04-18 16:01:22
  * @Description  : 请填写简介
  */
 
@@ -131,4 +131,9 @@ public class DocService {
             return content.getContent();
         }
     }
+
+    public void vote(Long id) {
+        docMapperCust.increaseVoteCount(id);
+    }
+
 }

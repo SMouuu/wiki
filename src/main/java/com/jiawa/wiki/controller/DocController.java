@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:02:06
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-15 21:51:09
+ * @LastEditTime : 2022-04-18 15:59:22
  * @Description  : 请填写简介
  */
 
@@ -75,6 +75,14 @@ public class DocController {
         CommonResp<String> resp = new CommonResp<>();
         String content = docService.findContent(id);
         resp.setContent(content);
+        return resp;
+    }
+
+    // 点赞数+1
+    @GetMapping("/vote/{id}")
+    public CommonResp vote(@PathVariable Long id) {
+        CommonResp resp = new CommonResp<>();
+        docService.vote(id);
         return resp;
     }
 }
