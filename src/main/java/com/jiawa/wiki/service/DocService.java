@@ -2,7 +2,7 @@
  * @Author       : SMou
  * @Date         : 2022-04-15 21:03:26
  * @LastEditors  : SMou
- * @LastEditTime : 2022-04-18 16:14:29
+ * @LastEditTime : 2022-04-18 16:43:41
  * @Description  : 请填写简介
  */
 
@@ -150,6 +150,10 @@ public class DocService {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEAT);
         }
 
+    }
+
+    public void updateEbookInfo() {
+        docMapperCust.updateEbookInfo();
     }
 
 }
